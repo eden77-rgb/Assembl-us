@@ -42,9 +42,61 @@ MOV [1000], AX</code></pre>
             syntaxe.</p>
     </section>
 
-    <section id="exemples"></section>
+    <section id="exemples">
+        <h2>💡 Exemples d'utilisation de MOV</h2>
+        <h3>🔧 Exemple complet en assembleur x86 (NASM)</h3>
+        <pre><code>section .data
+    message db 'Bonjour, monde !', 0Ah
 
-    <section id="exercices"></section>
+section .bss
+    buffer resb 20
+
+section .text
+    global _start
+
+_start:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, message
+    mov edx, 17
+    int 0x80
+
+    mov esi, message
+    mov edi, buffer
+    mov ecx, 17
+
+.copy_loop:
+    mov al, [esi]
+    mov [edi], al
+    inc esi
+    inc edi
+    loop .copy_loop
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+        </code></pre>
+        <p>Ce programme écrit une chaîne dans le terminal, puis la copie en mémoire avec une boucle. Chaque
+            étape utilise l’instruction <code>MOV</code> pour transférer des données.</p>
+    </section>
+
+    <section id="exercices">
+        <h1>Exercices</h1>
+        <h2>Exercice 1 – Remplir les registres</h2>
+        <ul>
+            <li>Mets <code>100</code> dans <code>EAX</code></li>
+            <li>Copie <code>EAX</code> dans <code>EDX</code></li>
+        </ul>
+        <h2>Exercice 2 – Registres en chaîne</h2>
+        <ul>
+            <li>Mets <code>42</code> dans <code>EBX</code></li>
+            <li>Copie <code>EBX</code> dans <code>ECX</code></li>
+            <li>Copie <code>ECX</code> dans <code>EAX</code></li>
+        </ul>
+        <h2>Exercice 3 – Détection d’erreur</h2>
+        <pre>MOV 10, EAX</pre>
+        <p>Trouve l’erreur, explique-la et corrige le code.</p>
+    </section>
 </body>
 
 </html>
