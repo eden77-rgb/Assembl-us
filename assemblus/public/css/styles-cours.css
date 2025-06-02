@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #121212;
+    color: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-weight: 700;
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+    color: lime;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.card {
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    padding: 20px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+}
+
+.card h2 {
+    margin: 0 0 12px 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: lime;
+}
+
+.card p {
+    flex-grow: 1;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.card button {
+    align-self: flex-start;
+    padding: 10px 16px;
+    background-color: lime;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #121212;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.card button:hover {
+    background-color: #32cd32;
+}
