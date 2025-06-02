@@ -2,6 +2,7 @@ import html_index from "../public/pages/index.html"
 import html_cours from "../public/pages/cours.html"
 
 /**
+ * https://assemblus.pageweaver.workers.dev/
  * Welcome to Cloudflare Workers! This is your first worker.
  *
  * - Run `npm run dev` in your terminal to start a development server
