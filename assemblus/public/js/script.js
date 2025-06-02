@@ -41,5 +41,6 @@ window.addEventListener('scroll', () => {
 const bouton = document.getElementById("BtnPush")
 bouton.addEventListener("click", () => {
     history.pushState(null, "", "/cours")
+    window.scrollTo(0, 0)
     location.reload()
 })
