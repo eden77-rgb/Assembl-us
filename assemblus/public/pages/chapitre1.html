@@ -16,89 +16,150 @@
     </nav>
 
     <section id="cours" class="active">
-        <h2>📘 Cours : Les registres et l'instruction <code>MOV</code></h2>
-        <h3>🔹 Qu'est-ce qu'un registre ?</h3>
-        <p>Un <strong>registre</strong> est une zone de stockage ultra-rapide directement intégrée au processeur.</p>
-        <h3>🔸 Registres principaux (x86)</h3>
-        <p>
-            <strong>AX</strong> : accumulateur principal<br>
-            <strong>BX</strong> : base<br>
-            <strong>CX</strong> : compteur<br>
-            <strong>DX</strong> : données<br>
-            <strong>SI/DI</strong> : source/destination<br>
-            <strong>SP/BP</strong> : pile/base pointer<br>
-            <strong>IP</strong> : pointeur d’instruction<br>
-            <strong>FLAGS</strong> : registre d’état
-        </p>
-        <h3>🆚 Registres vs Variables</h3>
-        <p>Les registres ont une taille fixe (16/32/64 bits), un usage spécifique, et ne sont pas dynamiques comme les
-            variables dans les langages de haut niveau.</p>
-        <h3>⚙️ L'instruction <code>MOV</code></h3>
-        <p>L’instruction <code>MOV</code> copie une donnée dans un registre ou une case mémoire.</p>
-        <p><strong>Syntaxe :</strong> <code>MOV destination, source</code></p>
-        <p><strong>Exemples :</strong></p>
-        <pre><code>MOV AX, 5
-MOV BX, AX
-MOV [1000], AX</code></pre>
-        <p><strong>Restrictions :</strong> pas de mémoire vers mémoire direct, source/destination doivent respecter la
-            syntaxe.</p>
+        <div id="cours" class="tab-content" style="display: block;">
+            <h2>📘 Cours : Les registres et l'instruction <code>MOV</code></h2>
+            <div class="card">
+                <h3>🔹 Qu'est-ce qu'un registre ?</h3>
+                <p>Un <strong>registre</strong> est une zone de stockage ultra-rapide directement intégrée au
+                    processeur. Contrairement à la mémoire RAM, les registres permettent un accès immédiat aux données
+                    nécessaires au traitement des instructions.</p>
+            </div>
+            <div class="card">
+                <h3>🔸 Registres principaux (x86)</h3>
+                <p>
+                    <strong>AX</strong> : accumulateur principal<br>
+                    <strong>BX</strong> : base<br>
+                    <strong>CX</strong> : compteur<br>
+                    <strong>DX</strong> : données<br>
+                    <strong>SI/DI</strong> : source/destination<br>
+                    <strong>SP/BP</strong> : pile/base pointer<br>
+                    <strong>IP</strong> : pointeur d’instruction<br>
+                    <strong>FLAGS</strong> : registre d’état
+                </p>
+            </div>
+            <div class="card">
+                <h3>🆚 Registres vs Variables</h3>
+                <p>Les registres ont une taille fixe (16/32/64 bits), un usage spécifique, et ne sont pas dynamiques
+                    comme les variables dans les langages de haut niveau.</p>
+            </div>
+            <div class="card">
+                <h3>⚙️ L'instruction <code>MOV</code></h3>
+                <p>L’instruction <code>MOV</code> copie une donnée dans un registre ou une case mémoire.</p>
+                <p><strong>Syntaxe :</strong> <code>MOV destination, source</code></p>
+                <p><strong>Exemples :</strong></p>
+                <pre><code>MOV AX, 5       ; AX prend la valeur 5
+MOV BX, AX      ; BX reçoit la valeur de AX
+MOV [1000], AX  ; La mémoire à l'adresse 1000 reçoit AX</code></pre>
+                <p><strong>Restrictions :</strong> pas de mémoire vers mémoire direct, source/destination doivent
+                    respecter la syntaxe.</p>
+            </div>
+        </div>
     </section>
 
     <section id="exemples">
-        <h2>💡 Exemples d'utilisation de MOV</h2>
-        <h3>🔧 Exemple complet en assembleur x86 (NASM)</h3>
-        <pre><code>section .data
-    message db 'Bonjour, monde !', 0Ah
+        <div id="exemples" class="tab-content">
+            <h2>💡 Exemples d'utilisation de MOV</h2>
+            <div class="card">
+                <h3>🔧 Exemple complet en assembleur x86 (NASM)</h3>
+                <pre><code>
+section .data
+    message db 'Bonjour, monde !', 0Ah ; Chaîne de texte avec retour à la ligne
 
 section .bss
-    buffer resb 20
+    buffer resb 20                    ; Réserve 20 octets en mémoire
 
 section .text
-    global _start
+    global _start                    ; Point d’entrée du programme
 
 _start:
-    mov eax, 4
-    mov ebx, 1
-    mov ecx, message
-    mov edx, 17
-    int 0x80
+    ; Copier une valeur dans un registre
+    mov eax, 4                       ; syscall write
+    mov ebx, 1                       ; descripteur stdout
+    mov ecx, message                 ; adresse du message
+    mov edx, 17                      ; longueur du message
+    int 0x80                         ; appel système
 
-    mov esi, message
-    mov edi, buffer
-    mov ecx, 17
+    ; Exemple de copie mémoire vers mémoire via registre
+    mov esi, message                 ; ESI pointe sur message
+    mov edi, buffer                  ; EDI pointe sur buffer
+    mov ecx, 17                      ; nombre d’octets à copier
 
 .copy_loop:
-    mov al, [esi]
-    mov [edi], al
-    inc esi
-    inc edi
-    loop .copy_loop
+    mov al, [esi]                   ; charge un octet de message
+    mov [edi], al                   ; écrit l’octet dans buffer
+    inc esi                         ; incrémente le pointeur source
+    inc edi                         ; incrémente le pointeur destination
+    loop .copy_loop                 ; décrémente ECX, boucle si ≠ 0
 
-    mov eax, 1
-    xor ebx, ebx
-    int 0x80
-        </code></pre>
-        <p>Ce programme écrit une chaîne dans le terminal, puis la copie en mémoire avec une boucle. Chaque
-            étape utilise l’instruction <code>MOV</code> pour transférer des données.</p>
+    ; Fin du programme
+    mov eax, 1                       ; syscall exit
+    xor ebx, ebx                     ; code de sortie 0
+    int 0x80                         ; appel système
+                </code></pre>
+                <p>Ce programme écrit une chaîne dans le terminal, puis la copie en mémoire avec une boucle. Chaque
+                    étape utilise l’instruction <code>MOV</code> pour transférer des données.</p>
+            </div>
+        </div>
     </section>
 
     <section id="exercices">
-        <h1>Exercices</h1>
-        <h2>Exercice 1 – Remplir les registres</h2>
-        <ul>
-            <li>Mets <code>100</code> dans <code>EAX</code></li>
-            <li>Copie <code>EAX</code> dans <code>EDX</code></li>
-        </ul>
-        <h2>Exercice 2 – Registres en chaîne</h2>
-        <ul>
-            <li>Mets <code>42</code> dans <code>EBX</code></li>
-            <li>Copie <code>EBX</code> dans <code>ECX</code></li>
-            <li>Copie <code>ECX</code> dans <code>EAX</code></li>
-        </ul>
-        <h2>Exercice 3 – Détection d’erreur</h2>
-        <pre>MOV 10, EAX</pre>
-        <p>Trouve l’erreur, explique-la et corrige le code.</p>
+        <div class="exercices-card">
+            <h1>Exercices</h1>
+            <div class="tabs-exos">
+                <button class="exo-tab active" data-exo="1">Exercice 1</button>
+                <button class="exo-tab" data-exo="2" disabled>Exercice 2</button>
+                <button class="exo-tab" data-exo="3" disabled>Exercice 3</button>
+            </div>
+            <div class="exo-content active" data-exo="1">
+                <h2>Exercice 1 – Remplir les registres</h2>
+                <ul>
+                    <li>Mets <code>100</code> dans <code>EAX</code></li>
+                    <li>Copie <code>EAX</code> dans <code>EDX</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>MOV</code> pour copier une valeur dans un registre.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="2">
+                <h2>Exercice 2 – Registres en chaîne</h2>
+                <ul>
+                    <li>Mets <code>42</code> dans <code>EBX</code></li>
+                    <li>Copie <code>EBX</code> dans <code>ECX</code></li>
+                    <li>Copie <code>ECX</code> dans <code>EAX</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Un registre peut être source ou destination dans <code>MOV</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="3">
+                <h2>Exercice 3 – Détection d’erreur</h2>
+                <pre>MOV 10, EAX</pre>
+                <p>Trouve l’erreur, explique-la et corrige le code.</p>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>La source de <code>MOV</code> ne doit pas être une adresse immédiate vers une destination
+                            immédiate.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="valider-btn" id="valider-exo">Valider</button>
+        </div>
+        <div class="code-editor-panel">
+            <label for="code-editor"><strong>💻 Ton code :</strong></label>
+            <div class="textarea-wrapper">
+                <pre id="line-numbers">1</pre>
+                <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+            </div>
+        </div>
     </section>
+
 </body>
 <script src="../js/chap1.js"></script>
 
