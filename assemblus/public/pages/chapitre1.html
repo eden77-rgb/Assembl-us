@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8" />
     <title>Chapitre 1 : Les registres</title>
 </head>
+
 <body>
     <nav>
         <button data-tab="cours" class="active">Cours</button>
@@ -11,10 +13,38 @@
         <button data-tab="exercices">Exercices</button>
     </nav>
 
-    <section id="cours" class="active"></section>
+    <section id="cours" class="active">
+        <h2>📘 Cours : Les registres et l'instruction <code>MOV</code></h2>
+        <h3>🔹 Qu'est-ce qu'un registre ?</h3>
+        <p>Un <strong>registre</strong> est une zone de stockage ultra-rapide directement intégrée au processeur.</p>
+        <h3>🔸 Registres principaux (x86)</h3>
+        <p>
+            <strong>AX</strong> : accumulateur principal<br>
+            <strong>BX</strong> : base<br>
+            <strong>CX</strong> : compteur<br>
+            <strong>DX</strong> : données<br>
+            <strong>SI/DI</strong> : source/destination<br>
+            <strong>SP/BP</strong> : pile/base pointer<br>
+            <strong>IP</strong> : pointeur d’instruction<br>
+            <strong>FLAGS</strong> : registre d’état
+        </p>
+        <h3>🆚 Registres vs Variables</h3>
+        <p>Les registres ont une taille fixe (16/32/64 bits), un usage spécifique, et ne sont pas dynamiques comme les
+            variables dans les langages de haut niveau.</p>
+        <h3>⚙️ L'instruction <code>MOV</code></h3>
+        <p>L’instruction <code>MOV</code> copie une donnée dans un registre ou une case mémoire.</p>
+        <p><strong>Syntaxe :</strong> <code>MOV destination, source</code></p>
+        <p><strong>Exemples :</strong></p>
+        <pre><code>MOV AX, 5
+MOV BX, AX
+MOV [1000], AX</code></pre>
+        <p><strong>Restrictions :</strong> pas de mémoire vers mémoire direct, source/destination doivent respecter la
+            syntaxe.</p>
+    </section>
 
     <section id="exemples"></section>
 
     <section id="exercices"></section>
 </body>
+
 </html>
