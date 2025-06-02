@@ -1,5 +1,6 @@
 import html_index from "../public/pages/index.html"
 import html_cours from "../public/pages/cours.html"
+import html_chap1 from "../public/pages/chapitre1.html"
 
 /**
  * https://assemblus.pageweaver.workers.dev/
@@ -27,6 +28,12 @@ export default {
 				{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
 			)
 		}
+
+		if (url.pathname == "/cours/chapitre1") {
+				return new Response(html_chap1,
+					{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
+				)
+			}
 
 		return new Response('404 Not Found', { status: 404 });
 	}
