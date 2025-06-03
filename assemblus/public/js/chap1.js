@@ -136,9 +136,10 @@ boutonConsole.addEventListener("click", async () => {
             console.log("Erreur :", data.erreur);
 
             terminal.style.display = "block";
+            data.code == 1 ? terminal.style.color = "#f44336" : terminal.style.color = "lime"
             terminal.textContent =
                 (data.code !== undefined ? `Code de retour : ${data.code}\n` : "") +
-                (data.erreur ? `Erreur : ${data.erreur}\n` : "") +
+                (data.erreur && data.code == 1 ? `Erreur : ${data.erreur}\n` : "") +
                 (data.amelioration ? `Astuce : ${data.amelioration}\n` : "");
         });
 })
