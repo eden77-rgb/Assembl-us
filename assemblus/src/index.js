@@ -2,6 +2,8 @@ import html_index from "../public/pages/index.html"
 import html_cours from "../public/pages/cours.html"
 import html_chap1 from "../public/pages/chapitre1.html"
 import html_chap2 from "../public/pages/chapitre2.html"
+import html_chap3 from "../public/pages/chapitre3.html"
+
 
 import { getData } from "./services/GroqService";
 
@@ -39,8 +41,14 @@ export default {
 			)
 		}
 
-		else if (url.pathname == "/cours/chapitre2") {
+		if (url.pathname == "/cours/chapitre2") {
 			return new Response(html_chap2,
+				{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
+			)
+		}
+
+		if (url.pathname == "/cours/chapitre3") {
+			return new Response(html_chap3,
 				{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
 			)
 		}
