@@ -1,0 +1,158 @@
+<!DOCTYPE html> 
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapitre 4 : Contrôle de flux</title>
+    <link rel="stylesheet" href="../css/styles-chap.css">
+</head>
+
+<body>
+    <nav>
+        <button data-tab="cours" class="active">Cours</button>
+        <button data-tab="exemples">Exemples</button>
+        <button data-tab="exercices">Exercices</button>
+    </nav>
+
+    <section id="cours" class="active">
+        <div id="cours" class="tab-content" style="display: block;">
+            <h2>📘 Cours : Le contrôle de flux en assembleur</h2>
+            <div class="card">
+                <h3>🔹 Pourquoi contrôler le flux ?</h3>
+                <p>Le <strong>contrôle de flux</strong> permet de modifier l'ordre normal d'exécution d’un programme. On peut sauter des instructions, répéter des blocs, ou exécuter des chemins différents selon des conditions.</p>
+            </div>
+            <div class="card">
+                <h3>🔸 Instructions de saut</h3>
+                <p>
+                    <strong>JMP</strong> : saut inconditionnel<br>
+                    <strong>JE / JZ</strong> : saut si égalité / zéro<br>
+                    <strong>JNE / JNZ</strong> : saut si inégalité / non-zéro<br>
+                    <strong>JG / JL / JGE / JLE</strong> : sauts signés selon les comparaisons<br>
+                    <strong>JC / JNC</strong> : saut si retenue / pas de retenue
+                </p>
+            </div>
+            <div class="card">
+                <h3>🔁 Boucles et conditions</h3>
+                <p>La boucle <code>LOOP</code> utilise <code>ECX</code> comme compteur. D'autres instructions de saut permettent de construire des structures conditionnelles avec <code>CMP</code> et des <code>Jxx</code>.</p>
+            </div>
+            <div class="card">
+                <h3>⚙️ L'instruction <code>CMP</code></h3>
+                <p><code>CMP</code> compare deux valeurs en soustrayant sans stocker le résultat. Elle modifie les drapeaux du processeur, qui sont ensuite utilisés par les instructions de saut conditionnel.</p>
+                <p><strong>Exemple :</strong></p>
+                <pre><code>CMP EAX, EBX       ; Compare EAX et EBX
+JE .egalité        ; Saut si EAX == EBX
+JNE .différent     ; Saut si EAX != EBX</code></pre>
+                <p>Le nom des étiquettes est libre mais doit commencer par un point si local.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exemples">
+        <div id="exemples" class="tab-content">
+            <h2>💡 Exemples d'utilisation du contrôle de flux</h2>
+            <div class="card">
+                <h3>🔧 Exemple de boucle et de condition</h3>
+                <pre><code>
+section .data
+    compteur db 5
+
+section .text
+    global _start
+
+_start:
+    mov ecx, 5           ; compteur pour la boucle
+
+.boucle:
+    ; ici on mettrait une instruction répétée
+    ; par exemple écrire à l'écran ou calculer quelque chose
+    loop .boucle         ; décrémente ECX et saute si ≠ 0
+
+    mov eax, 10
+    mov ebx, 10
+    cmp eax, ebx
+    je .egal             ; saute si égalité
+    jmp .fin
+
+.egal:
+    ; code spécifique si égalité
+    nop
+
+.fin:
+    mov eax, 1           ; syscall exit
+    xor ebx, ebx
+    int 0x80
+                </code></pre>
+                <p>Ce programme exécute une boucle 5 fois puis compare deux registres. Il saute à une étiquette si les valeurs sont égales.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercices">
+        <div class="exercices-card">
+            <h1>Exercices</h1>
+            <div class="tabs-exos">
+                <button class="exo-tab active" data-exo="1">Exercice 1</button>
+                <button class="exo-tab" data-exo="2" disabled>Exercice 2</button>
+                <button class="exo-tab" data-exo="3" disabled>Exercice 3</button>
+            </div>
+            <div class="exo-content active" data-exo="1">
+                <h2>Exercice 1 – Boucle simple</h2>
+                <ul class="sujet1">
+                    <li>Utilise <code>ECX</code> pour faire une boucle de 4 itérations</li>
+                    <li>Insère une instruction <code>NOP</code> dans la boucle</li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>LOOP</code> et initialise <code>ECX</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="2">
+                <h2>Exercice 2 – Saut conditionnel</h2>
+                <ul class="sujet2">
+                    <li>Compare <code>EAX</code> et <code>EBX</code></li>
+                    <li>Si EAX = EBX, saute à une étiquette appelée <code>.ok</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>CMP</code> suivi de <code>JE</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="3">
+                <h2>Exercice 3 – Corriger une condition</h2>
+                <pre class="sujet3">JMP EAX</pre>
+                <p class="sujet3">Trouve l’erreur, explique-la et corrige le saut vers une étiquette valide.</p>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Les sauts utilisent des étiquettes, pas des registres.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="valider-btn" id="valider-exo">Valider</button>
+        </div>
+        <div class="code-editor-panel">
+            <label for="code-editor"><strong>💻 Ton code :</strong></label>
+            <div class="textarea-wrapper" style="position:relative;">
+                <pre id="line-numbers">1</pre>
+                <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+                <button id="goto-console" type="button" title="Aller à la console"
+                    style="position:absolute; bottom:10px; right:10px; width:44px; height:44px; border-radius:50%; background:lime; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5l8 7-8 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div id="console-terminal" class="console-terminal" style="display:none;"></div>
+        </div>
+    </section>
+
+</body>
+<script src="../js/chap4.js"></script>
+
+</html>
