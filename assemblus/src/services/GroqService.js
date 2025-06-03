@@ -13,6 +13,9 @@ export async function getData(apiKey, sujet, code) {
     Dans le cas d'une PARTI DE CODE :
         - Verifie JUSTE si la syntaxe est correct
 
+    Dans le cas ou tu vois pour code un commentaire :
+        - Renvoie pas de commentaire
+
     Ensuite, réponds TOUJOURS au format JSON suivant :
 
     {
