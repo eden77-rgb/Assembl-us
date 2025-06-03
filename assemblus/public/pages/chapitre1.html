@@ -153,10 +153,18 @@ _start:
         </div>
         <div class="code-editor-panel">
             <label for="code-editor"><strong>💻 Ton code :</strong></label>
-            <div class="textarea-wrapper">
+            <div class="textarea-wrapper" style="position:relative;">
                 <pre id="line-numbers">1</pre>
                 <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+                <button id="goto-console" type="button" title="Aller à la console"
+                    style="position:absolute; bottom:10px; right:10px; width:44px; height:44px; border-radius:50%; background:lime; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5l8 7-8 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
             </div>
+            <div id="console-terminal" class="console-terminal" style="display:none;"></div>
         </div>
     </section>
 

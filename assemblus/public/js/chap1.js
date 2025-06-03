@@ -102,3 +102,43 @@ if (typeof exoTabs != "undefined") {
 }
 
 updateLineNumbers();
+
+
+
+const exosSujet = [
+    `; Exercice 1\n; Mets 100 dans EAX puis copie EAX dans EDX\n`,
+    `; Exercice 2\n; Mets 42 dans EBX, copie EBX dans ECX, puis ECX dans EAX\n`,
+    `; Exercice 3\n; Corrige l'erreur : MOV 10, EAX\n`
+];
+
+const boutonConsole = document.getElementById("goto-console")
+const textarea1 = document.getElementById("code-editor")
+const terminal = document.getElementById("console-terminal")
+
+function getExerciceActifIndex() {
+    const tabActive = document.querySelector('.exo-tab.active');
+    if (tabActive) {
+        return parseInt(tabActive.getAttribute('data-exo'), 10) - 1;
+    }
+    return 0;
+}
+
+boutonConsole.addEventListener("click", async () => {
+    const sujet = exosSujet[getExerciceActifIndex()]
+    const code = textarea1.value;
+
+    fetch(`/api?sujet=${encodeURIComponent(sujet)}&code=${encodeURIComponent(code)}`)
+        .then(res => res.json())
+        .then(data => {
+            console.clear()
+            console.log("Amélioration :", data.amelioration);
+            console.log("Code :", data.code);
+            console.log("Erreur :", data.erreur);
+
+            terminal.style.display = "block";
+            terminal.textContent =
+                (data.code !== undefined ? `Code de retour : ${data.code}\n` : "") +
+                (data.erreur ? `Erreur : ${data.erreur}\n` : "") +
+                (data.amelioration ? `Astuce : ${data.amelioration}\n` : "");
+        });
+})
