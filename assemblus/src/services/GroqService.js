@@ -10,8 +10,8 @@ export async function getData(apiKey, sujet, code) {
     Dans le cas d'un code complet :
         - Compile et exécute le code comme si tu étais dans un terminal Linux avec nasm et ld.
     
-    Dans le cas d'une parti de code :
-        - Verifie si la syntaxe est correct
+    Dans le cas d'une PARTI DE CODE :
+        - Verifie JUSTE si la syntaxe est correct
 
     Ensuite, réponds TOUJOURS au format JSON suivant :
 

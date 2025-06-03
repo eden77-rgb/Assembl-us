@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapitre 2 : Opérations arithmétiques</title>
+    <link rel="stylesheet" href="../css/styles-chap.css">
+</head>
+
+<body>
+    <nav>
+        <button data-tab="cours" class="active">Cours</button>
+        <button data-tab="exemples">Exemples</button>
+        <button data-tab="exercices">Exercices</button>
+    </nav>
+
+    <section id="cours" class="active">
+        <div id="cours" class="tab-content" style="display: block;">
+            <h2>📘 Cours : Opérations arithmétiques en assembleur</h2>
+            <div class="card">
+                <h3>🔹 Les instructions arithmétiques de base</h3>
+                <p>Les opérations arithmétiques en assembleur permettent de manipuler les valeurs dans les registres.
+                </p>
+                <ul>
+                    <li><code>ADD</code> : addition</li>
+                    <li><code>SUB</code> : soustraction</li>
+                    <li><code>MUL</code> : multiplication</li>
+                    <li><code>DIV</code> : division</li>
+                    <li><code>INC</code> : incrémentation (ajoute 1)</li>
+                    <li><code>DEC</code> : décrémentation (retire 1)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>🔸 Syntaxe générale</h3>
+                <p>Les instructions arithmétiques prennent souvent la forme :</p>
+                <pre><code>INSTRUCTION destination, source</code></pre>
+                <p>Par exemple :</p>
+                <pre><code>ADD AX, BX   ; AX = AX + BX
+SUB CX, 5    ; CX = CX - 5</code></pre>
+            </div>
+            <div class="card">
+                <h3>🆚 Remarques importantes</h3>
+                <p>Les opérations <code>MUL</code> et <code>DIV</code> fonctionnent différemment selon les registres
+                    utilisés (exemple : multiplication implicite avec AX).</p>
+                <p>Les opérations peuvent modifier les drapeaux (FLAGS) qui servent aux instructions conditionnelles.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exemples">
+        <div id="exemples" class="tab-content">
+            <h2>💡 Exemples d’opérations arithmétiques</h2>
+            <div class="card">
+                <h3>🔧 Exemple : Addition et soustraction</h3>
+                <pre><code>
+MOV EAX, 10       ; Met 10 dans EAX
+MOV EBX, 5        ; Met 5 dans EBX
+ADD EAX, EBX      ; EAX = 10 + 5 = 15
+SUB EAX, 3        ; EAX = 15 - 3 = 12
+            </code></pre>
+            </div>
+            <div class="card">
+                <h3>🔧 Exemple : Multiplication</h3>
+                <pre><code>
+MOV EAX, 6
+MOV EBX, 7
+MUL EBX          ; Résultat 6 * 7 = 42, stocké dans EAX
+            </code></pre>
+            </div>
+            <div class="card">
+                <h3>🔧 Exemple : Division</h3>
+                <pre><code>
+MOV EAX, 20
+MOV EBX, 4
+DIV EBX          ; Résultat 20 / 4 = 5, quotient dans EAX, reste dans EDX
+            </code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercices">
+        <div class="exercices-card">
+            <h1>Exercices</h1>
+            <div class="tabs-exos">
+                <button class="exo-tab active" data-exo="1">Exercice 1</button>
+                <button class="exo-tab" data-exo="2" disabled>Exercice 2</button>
+                <button class="exo-tab" data-exo="3" disabled>Exercice 3</button>
+            </div>
+            <div class="exo-content active" data-exo="1">
+                <h2>Exercice 1 – Addition simple</h2>
+                <ul class="sujet1">
+                    <li>Mets <code>8</code> dans <code>EAX</code></li>
+                    <li>Ajoute <code>15</code> à <code>EAX</code> avec <code>ADD</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>MOV</code> et <code>ADD</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="2">
+                <h2>Exercice 2 – Soustraction</h2>
+                <ul class="sujet2">
+                    <li>Mets <code>30</code> dans <code>EBX</code></li>
+                    <li>Soustrais <code>12</code> avec <code>SUB</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>La syntaxe est <code>SUB destination, source</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="3">
+                <h2>Exercice 3 – Multiplication et division</h2>
+                <ul class="sujet3">
+                    <li>Mets <code>9</code> dans <code>EAX</code></li>
+                    <li>Multiplie par <code>4</code> avec <code>MUL</code></li>
+                    <li>Divise le résultat par <code>3</code> avec <code>DIV</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Attention à la gestion du quotient et du reste avec <code>DIV</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="valider-btn" id="valider-exo">Valider</button>
+        </div>
+        <div class="code-editor-panel">
+            <label for="code-editor"><strong>💻 Ton code :</strong></label>
+            <div class="textarea-wrapper" style="position:relative;">
+                <pre id="line-numbers">1</pre>
+                <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+                <button id="goto-console" type="button" title="Aller à la console"
+                    style="position:absolute; bottom:10px; right:10px; width:44px; height:44px; border-radius:50%; background:lime; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5l8 7-8 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div id="console-terminal" class="console-terminal" style="display:none;"></div>
+        </div>
+    </section>
+
+
+</body>
+<script src="../js/chap2.js"></script>
+
+</html>

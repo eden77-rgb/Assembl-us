@@ -16,13 +16,16 @@ document.querySelectorAll('pre code').forEach(block => {
         return;
     }
 
+    const operators = ['ADD', 'SUB', 'MUL', 'DIV', 'INC', 'DEC'];
+
     const lines = block.textContent.replace(/\r\n/g, '\n').split('\n');
     block.innerHTML = lines.map(line => {
-        if (/^\s*mov\b/i.test(line)) {
+        const trimmedLine = line.trim().toUpperCase();
+        const startsWithOperator = operators.some(op => trimmedLine.startsWith(op));
+        
+        if (startsWithOperator) {
             return `<span class="lime">${line || ' '}</span>`;
-        }
-
-        else {
+        } else {
             return `<span>${line || ' '}</span>`;
         }
     }).join('');
@@ -31,9 +34,9 @@ document.querySelectorAll('pre code').forEach(block => {
 
 
 const exosConsignes = [
-    `; Exercice 1\n; Mets 100 dans EAX puis copie EAX dans EDX\n`,
-    `; Exercice 2\n; Mets 42 dans EBX, copie EBX dans ECX, puis ECX dans EAX\n`,
-    `; Exercice 3\n; Corrige l'erreur : MOV 10, EAX\n`
+    `; Exercice 1\n; Mets 8 dans EAX puis ajoute 15 à EAX avec ADD\n`,
+    `; Exercice 2\n; Mets 30 dans EBX puis soustrais 12 avec SUB\n`,
+    `; Exercice 3\n; Mets 9 dans EAX, multiplie par 4 avec MUL, puis divise par 3 avec DIV\n`
 ];
 
 const exoTabs = document.querySelectorAll('.exo-tab');
@@ -118,9 +121,9 @@ updateLineNumbers();
 
 
 const exosSujet = [
-    `; Exercice 1\n; Mets 100 dans EAX puis copie EAX dans EDX\n`,
-    `; Exercice 2\n; Mets 42 dans EBX, copie EBX dans ECX, puis ECX dans EAX\n`,
-    `; Exercice 3\n; Corrige l'erreur : MOV 10, EAX\n`
+    `; Exercice 1\n; Mets 8 dans EAX puis ajoute 15 à EAX avec ADD\n`,
+    `; Exercice 2\n; Mets 30 dans EBX puis soustrais 12 avec SUB\n`,
+    `; Exercice 3\n; Mets 9 dans EAX, multiplie par 4 avec MUL, puis divise par 3 avec DIV\n`
 ];
 
 const boutonConsole = document.getElementById("goto-console")
