@@ -20,8 +20,8 @@ document.querySelectorAll('pre code').forEach(block => {
     block.innerHTML = lines.map(line => {
         if (/^\s*mov\b/i.test(line)) {
             return `<span class="lime">${line || ' '}</span>`;
-        } 
-        
+        }
+
         else {
             return `<span>${line || ' '}</span>`;
         }
@@ -63,7 +63,7 @@ exoTabs.forEach(tab => {
 
 validerBtn.addEventListener('click', function () {
 
-    if (codeEditor.value.trim().length === 0) {
+    if (codeEditor.value.trim().length == 0) {
         alert("Écris d'abord une réponse !");
         return;
     }
@@ -77,8 +77,8 @@ validerBtn.addEventListener('click', function () {
         document.querySelector(`.exo-content[data-exo="${currentExo + 1}"]`).classList.add('active');
         codeEditor.value = exosConsignes[currentExo];
         currentExo += 1;
-    } 
-    
+    }
+
     else {
         codeEditor.value = "; Bravo, tu as fini tous les exercices !";
     }
@@ -95,7 +95,7 @@ function updateLineNumbers() {
 textarea.addEventListener('input', updateLineNumbers);
 textarea.addEventListener('change', updateLineNumbers);
 
-if (typeof exoTabs !== "undefined") {
+if (typeof exoTabs != "undefined") {
     exoTabs.forEach(tab => {
         tab.addEventListener('click', updateLineNumbers);
     });
