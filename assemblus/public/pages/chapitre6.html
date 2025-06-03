@@ -1,0 +1,148 @@
+<!DOCTYPE html> 
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapitre 6 : Interruptions</title>
+    <link rel="stylesheet" href="../css/styles-chap.css">
+</head>
+
+<body>
+    <nav>
+        <button data-tab="cours" class="active">Cours</button>
+        <button data-tab="exemples">Exemples</button>
+        <button data-tab="exercices">Exercices</button>
+    </nav>
+
+    <section id="cours" class="active">
+        <div id="cours" class="tab-content" style="display: block;">
+            <h2>📘 Cours : Les interruptions et leur gestion</h2>
+            <div class="card">
+                <h3>🔹 Qu'est-ce qu'une interruption ?</h3>
+                <p>Une <strong>interruption</strong> est un signal envoyé au processeur pour attirer son attention
+                    et suspendre temporairement l'exécution normale du programme afin de traiter un événement urgent.</p>
+            </div>
+            <div class="card">
+                <h3>🔸 Types d'interruptions</h3>
+                <p>
+                    <strong>Interruption matérielle</strong> : générée par un composant matériel (ex. clavier, timer)<br>
+                    <strong>Interruption logicielle</strong> : générée par une instruction (ex. INT en assembleur)<br>
+                    <strong>Exception</strong> : interruption liée à une erreur (ex. division par zéro)
+                </p>
+            </div>
+            <div class="card">
+                <h3>🆚 Interruptions vs Polling</h3>
+                <p>Les interruptions permettent au processeur de réagir immédiatement à un événement sans avoir à
+                    interroger constamment les périphériques (polling), ce qui optimise les performances.</p>
+            </div>
+            <div class="card">
+                <h3>⚙️ L'instruction <code>INT</code></h3>
+                <p>L’instruction <code>INT</code> génère une interruption logicielle pour appeler une routine spécifique.</p>
+                <p><strong>Syntaxe :</strong> <code>INT numéro</code></p>
+                <p><strong>Exemples :</strong></p>
+                <pre><code>INT 0x80       ; appel système sous Linux (exemple classique)
+INT 3          ; interruption pour debugger (breakpoint)</code></pre>
+                <p><strong>Remarque :</strong> Le numéro de l’interruption détermine la routine appelée.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exemples">
+        <div id="exemples" class="tab-content">
+            <h2>💡 Exemples d'utilisation des interruptions</h2>
+            <div class="card">
+                <h3>🔧 Exemple d’interruption logicielle en assembleur x86 (NASM)</h3>
+                <pre><code>
+section .data
+    message db 'Hello, interruption!', 0Ah
+
+section .text
+    global _start
+
+_start:
+    ; Ecrire un message via interruption système
+    mov eax, 4          ; syscall write
+    mov ebx, 1          ; stdout
+    mov ecx, message    ; adresse message
+    mov edx, 20         ; longueur message
+    int 0x80            ; appel interruption système
+
+    ; Fin du programme
+    mov eax, 1          ; syscall exit
+    xor ebx, ebx        ; code 0
+    int 0x80            ; appel interruption système
+                </code></pre>
+                <p>Ce programme utilise l’instruction <code>INT 0x80</code> pour appeler les services système Linux, notamment écrire sur la sortie standard et terminer le programme.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercices">
+        <div class="exercices-card">
+            <h1>Exercices</h1>
+            <div class="tabs-exos">
+                <button class="exo-tab active" data-exo="1">Exercice 1</button>
+                <button class="exo-tab" data-exo="2" disabled>Exercice 2</button>
+                <button class="exo-tab" data-exo="3" disabled>Exercice 3</button>
+            </div>
+            <div class="exo-content active" data-exo="1">
+                <h2>Exercice 1 – Générer une interruption logicielle</h2>
+                <ul class="sujet1">
+                    <li>Écris une instruction pour générer une interruption logicielle de numéro <code>0x80</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise l’instruction <code>INT</code> suivie du numéro d’interruption.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="2">
+                <h2>Exercice 2 – Identifier les types d’interruptions</h2>
+                <ul class="sujet2">
+                    <li>Donne un exemple d’interruption matérielle.</li>
+                    <li>Donne un exemple d’interruption logicielle.</li>
+                    <li>Explique ce qu’est une exception.</li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Pense aux périphériques et aux erreurs du processeur.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="3">
+                <h2>Exercice 3 – Correction d’erreur</h2>
+                <pre class="sujet3">INT 5 ; Que fait cette instruction ? Est-ce correct ?</pre>
+                <p class="sujet3">Explique et propose une modification si nécessaire.</p>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Le numéro d’interruption doit correspondre à une routine existante.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="valider-btn" id="valider-exo">Valider</button>
+        </div>
+        <div class="code-editor-panel">
+            <label for="code-editor"><strong>💻 Ton code :</strong></label>
+            <div class="textarea-wrapper" style="position:relative;">
+                <pre id="line-numbers">1</pre>
+                <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+                <button id="goto-console" type="button" title="Aller à la console"
+                    style="position:absolute; bottom:10px; right:10px; width:44px; height:44px; border-radius:50%; background:lime; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5l8 7-8 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div id="console-terminal" class="console-terminal" style="display:none;"></div>
+        </div>
+    </section>
+
+</body>
+<script src="../js/chap6.js"></script>
+
+</html>

@@ -5,6 +5,7 @@ import html_chap2 from "../public/pages/chapitre2.html"
 import html_chap3 from "../public/pages/chapitre3.html"
 import html_chap4 from "../public/pages/chapitre4.html"
 import html_chap5 from "../public/pages/chapitre5.html"
+import html_chap6 from "../public/pages/chapitre6.html"
 
 
 import { getData } from "./services/GroqService";
@@ -63,6 +64,12 @@ export default {
 
 		if (url.pathname == "/cours/chapitre5") {
 			return new Response(html_chap5,
+				{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
+			)
+		}
+
+		if (url.pathname == "/cours/chapitre6") {
+			return new Response(html_chap6,
 				{ headers: { "Content-Type": "text/html; charset=UTF-8" } }
 			)
 		}
