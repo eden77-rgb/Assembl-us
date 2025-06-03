@@ -1,0 +1,151 @@
+<!DOCTYPE html> 
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapitre 5 : Pile et fonctions</title>
+    <link rel="stylesheet" href="../css/styles-chap.css">
+</head>
+
+<body>
+    <nav>
+        <button data-tab="cours" class="active">Cours</button>
+        <button data-tab="exemples">Exemples</button>
+        <button data-tab="exercices">Exercices</button>
+    </nav>
+
+    <section id="cours" class="active">
+        <div id="cours" class="tab-content" style="display: block;">
+            <h2>📘 Cours : La pile et l'appel de fonctions en assembleur</h2>
+            <div class="card">
+                <h3>🔹 Qu'est-ce que la pile ?</h3>
+                <p>La <strong>pile</strong> est une zone mémoire utilisée pour stocker temporairement des données comme les variables locales, les adresses de retour et les paramètres des fonctions. Elle fonctionne selon le principe LIFO (Last In, First Out).</p>
+            </div>
+            <div class="card">
+                <h3>🔸 Registres liés à la pile</h3>
+                <p>
+                    <strong>SP (Stack Pointer)</strong> : pointe vers le sommet de la pile<br>
+                    <strong>BP (Base Pointer)</strong> : pointeur de base, souvent utilisé pour accéder aux variables locales<br>
+                    <strong>IP (Instruction Pointer)</strong> : adresse de l'instruction en cours d'exécution<br>
+                </p>
+            </div>
+            <div class="card">
+                <h3>🆚 Fonctionnement de la pile</h3>
+                <p>Les instructions <code>PUSH</code> et <code>POP</code> permettent respectivement d’empiler et dépiler des données. Chaque appel de fonction sauvegarde l’adresse de retour sur la pile avant d’exécuter le corps de la fonction.</p>
+            </div>
+            <div class="card">
+                <h3>⚙️ Instructions clés : <code>PUSH</code>, <code>POP</code>, <code>CALL</code>, <code>RET</code></h3>
+                <p><code>PUSH</code> : empile une valeur sur la pile.</p>
+                <p><code>POP</code> : dépile la valeur au sommet de la pile.</p>
+                <p><code>CALL</code> : appelle une fonction en sauvegardant l’adresse suivante sur la pile.</p>
+                <p><code>RET</code> : retourne à l’instruction après l’appel de fonction en dépilant l’adresse de retour.</p>
+                <p><strong>Exemple :</strong></p>
+                <pre><code>PUSH EAX      ; empile EAX
+CALL fonction  ; appelle fonction
+POP EAX       ; récupère EAX</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="exemples">
+        <div id="exemples" class="tab-content">
+            <h2>💡 Exemples d’utilisation de la pile et fonctions en assembleur x86</h2>
+            <div class="card">
+                <h3>🔧 Exemple simple d'appel de fonction avec la pile</h3>
+                <pre><code>
+section .text
+global _start
+
+_start:
+    mov eax, 5
+    push eax          ; empiler argument
+    call ma_fonction  ; appel fonction
+    add esp, 4        ; nettoyer la pile
+
+    ; fin du programme
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
+
+ma_fonction:
+    push ebp          ; sauvegarder base pointer
+    mov ebp, esp      ; setup frame pointer
+    mov eax, [ebp+8]  ; récupérer argument
+    ; traitement ici
+    pop ebp           ; restaurer base pointer
+    ret
+                </code></pre>
+                <p>Ce programme montre comment passer un argument sur la pile, appeler une fonction, et restaurer la pile ensuite.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="exercices">
+        <div class="exercices-card">
+            <h1>Exercices</h1>
+            <div class="tabs-exos">
+                <button class="exo-tab active" data-exo="1">Exercice 1</button>
+                <button class="exo-tab" data-exo="2" disabled>Exercice 2</button>
+                <button class="exo-tab" data-exo="3" disabled>Exercice 3</button>
+            </div>
+            <div class="exo-content active" data-exo="1">
+                <h2>Exercice 1 – Utiliser la pile</h2>
+                <ul class="sujet1">
+                    <li>Empile la valeur <code>10</code> dans la pile avec <code>PUSH</code></li>
+                    <li>Dépile cette valeur dans <code>EAX</code> avec <code>POP</code></li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>PUSH</code> et <code>POP</code> pour manipuler la pile.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="2">
+                <h2>Exercice 2 – Appel de fonction simple</h2>
+                <ul class="sujet2">
+                    <li>Appelle une fonction <code>ma_fonction</code> depuis <code>_start</code></li>
+                    <li>Dans <code>ma_fonction</code>, sauvegarde <code>EBP</code>, puis restaure-le avant de retourner</li>
+                </ul>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Utilise <code>CALL</code>, <code>PUSH EBP</code>, <code>MOV EBP, ESP</code>, <code>POP EBP</code>, et <code>RET</code>.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="exo-content" data-exo="3">
+                <h2>Exercice 3 – Corriger l'erreur de pile</h2>
+                <pre class="sujet3">POP ESP</pre>
+                <p class="sujet3">Explique pourquoi cette instruction est une erreur et corrige-la pour manipuler la pile correctement.</p>
+                <div class="aide">
+                    <strong>Aide :</strong>
+                    <ul>
+                        <li>Ne pas modifier directement <code>ESP</code> avec <code>POP</code>, car cela corrompt la pile.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="valider-btn" id="valider-exo">Valider</button>
+        </div>
+        <div class="code-editor-panel">
+            <label for="code-editor"><strong>💻 Ton code :</strong></label>
+            <div class="textarea-wrapper" style="position:relative;">
+                <pre id="line-numbers">1</pre>
+                <textarea id="code-editor" spellcheck="false" placeholder="Écris ici ton code assembleur..."></textarea>
+                <button id="goto-console" type="button" title="Aller à la console"
+                    style="position:absolute; bottom:10px; right:10px; width:44px; height:44px; border-radius:50%; background:lime; border:none; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,0.12); cursor:pointer;">
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M8 5l8 7-8 7" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div id="console-terminal" class="console-terminal" style="display:none;"></div>
+        </div>
+    </section>
+
+</body>
+<script src="../js/chap5.js"></script>
+
+</html>
